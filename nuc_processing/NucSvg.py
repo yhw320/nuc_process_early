@@ -221,8 +221,11 @@ class SvgDocument(object):
   def image(self, x, y, w, h, data):
 
     io = bytes_io()
-    img = misc.toimage(data)
-    img.save(io, format="PNG")
+    # img = misc.toimage(data)
+    # img.save(io, format="PNG")
+    from PIL import Image
+    image = Image.fromarray(np.uint8(data))
+    image.save("{}.png".format(io))
     base_64_data = base64.b64encode(io.getvalue()).decode()
 
     line = '     <image x="%d" y="%d" width="%d" height="%d" xlink:href="data:image/png;base64,%s" />\n' % (x, y, w, h, base_64_data)
